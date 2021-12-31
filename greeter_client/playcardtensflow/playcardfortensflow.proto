@@ -1,0 +1,48 @@
+syntax="proto3";
+package playcardtensflow.v1;;
+
+import "google/api/annotations.proto";
+ 
+option go_package = "RobotServer/api/playcardtensflow/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.playcardtensflow.v1";
+option java_outer_classname = "playcardtensflowProtoV1";
+
+message ReqPlayCardinfo
+{	
+    int32 player_position = 1;
+	string player_hand_cards = 2;
+	string player_hand_suits = 3;
+	string num_cards_left = 4;
+
+	string last_played_cards=5;
+	string remain_cards =6;
+	bool is_controller =7;
+	int32 level = 8;
+	string player_hand_suitshuase=9;//手牌数值对应的花色
+}
+
+
+
+//index actionspace中index
+//suits 红桃以0表示，黑桃1，方块2，梅花3
+message FlushInfo
+{
+   string  index = 1;
+   int32   suits = 2;  //
+}
+message RespPlayCardInfo
+{
+	int32 actionIndex = 1;
+	int32 player_position=2;
+}
+
+
+service playcardtensflowService {
+  rpc SendPlayCardToServer (ReqPlayCardinfo) returns (RespPlayCardInfo) {
+	  option (google.api.http) = {
+            get: "/playcardtensflowService/{player_position}"
+      };
+  }
+}
+
